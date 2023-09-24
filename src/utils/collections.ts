@@ -472,12 +472,17 @@ export const selectLast = <T extends ItemLike>({
 export const selectOrdered = <T extends ItemLike>({
   byId,
   order,
-}: Collection<T>): readonly T[] =>
-  order === undefined
-    ? Object.values(byId)
-    : order.length === 0
-    ? EMPTY_ARRAY
-    : order.map((id) => byId[id]).filter((t?: T): t is T => !isNil(t));
+}: ReadonlyDeep<Collection<T>>): ReadonlyDeep<T[]> => {
+  if (order === undefined) {
+    return Object.values(byId);
+  } else {
+    if (order.length === 0) {
+      return EMPTY_ARRAY;
+    } else {
+      return order.map((id) => byId[id]).filter((t?: T): t is T => !isNil(t));
+    }
+  }
+};
 
 /**
  * Helper function that takes an array of item IDs and an ordered collection,

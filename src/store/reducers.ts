@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { type ReadonlyDeep } from 'type-fest';
 
 /**
  * Reducer functions for handling the part of the state object that stores the
@@ -129,3 +130,4 @@ export default reducer;
 // https://redux.js.org/usage/usage-with-typescript#define-root-state-and-dispatch-types
 // when `store/index` gets annotated.
 export type RootState = ReturnType<typeof reducer>;
+export type RootSelector<T> = (state: RootState) => ReadonlyDeep<T>;

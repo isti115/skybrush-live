@@ -24,7 +24,7 @@ import { type Coordinate2D } from '~/utils/math';
  * The flat Earth coordinate system is at the given position and its zero
  * degree heading points towards the heading given in the `angle` property.
  */
-type MapViewSliceState = ReadonlyDeep<{
+export type MapViewSliceState = ReadonlyDeep<{
   position: Coordinate2D;
   angle: string;
   zoom: number;
