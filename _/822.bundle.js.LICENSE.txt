@@ -1,0 +1,9 @@
+/**
+ * marked v4.3.0 - a markdown parser
+ * Copyright (c) 2011-2023, Christopher Jeffrey. (MIT Licensed)
+ * https://github.com/markedjs/marked
+ */
+
+// Distributed under an MIT license: http://codemirror.net/LICENSE
+
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
