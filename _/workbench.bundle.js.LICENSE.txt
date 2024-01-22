@@ -6,8 +6,6 @@
 
 /* closeLicenseInfoDialog */
 
-/* default.query.getLicenseInformation */
-
 /* getLicensedLayerById */
 
 /* setServerLicense */
@@ -17,12 +15,17 @@
 /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /**
-     * Clears the information about the currently active license on the server.
-     */
+         * Clears the information about the currently active license on the server.
+         */
 
 /**
-     * Sets the information about the currently active license on the server.
-     */
+         * Sets the information about the currently active license on the server.
+         */
+
+/**
+ * @file Slice of the state object that stores the status of the license
+ * information dialog.
+ */
 
 /**
  * Presentation component for the dialog that allows the user to retrieve the
