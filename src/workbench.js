@@ -76,6 +76,12 @@ export const componentRegistry = {
     detachable: true,
     feature: 'beacons',
   },
+  'camera-view': {
+    component: views.CameraView,
+    label: 'Camera',
+    detachable: true,
+    // feature: 'camera',
+  },
   'connection-list': {
     // deprecated, kept there for compatibility
     component: views.ConnectionList,

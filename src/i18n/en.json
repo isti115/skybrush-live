@@ -256,6 +256,7 @@
   },
   "view": {
     "beacon-list": "Beacons",
+    "camera-view": "Camera",
     "dock-list": "Docks",
     "feature-list": "Features",
     "field-notes": "Field notes",

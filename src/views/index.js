@@ -4,6 +4,7 @@
  */
 
 import BeaconList from './beacons';
+import CameraView from './camera';
 import ClockDisplayList from './clocks';
 import ConnectionList from './connections';
 import DatasetList from './datasets';
@@ -25,6 +26,7 @@ import ThreeDTopLevelView from './three-d';
 
 const views = {
   BeaconList,
+  CameraView,
   ClockDisplayList,
   ConnectionList,
   DatasetList,

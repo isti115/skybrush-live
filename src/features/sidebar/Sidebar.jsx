@@ -33,6 +33,7 @@ import { MissionType } from '~/model/missions';
 import { hasFeature } from '~/utils/configuration';
 
 import { isSidebarOpen } from './selectors';
+import { Videocam } from '@material-ui/icons';
 
 // NOTE: The scrollbar is not only OS dependent, but also browser dependent.
 const SIDEBAR_OPEN_WIDTH = 180; /* 160px is enough for most platforms, but apparently Windows needs 180px because of the scrollbar */
@@ -54,6 +55,7 @@ const innerStyle = {
   width: SIDEBAR_OPEN_WIDTH,
 };
 
+const hasCamera = hasFeature('camera');
 const hasMissionEditor = hasFeature('missionEditor');
 const hasShowControl = hasFeature('showControl');
 
@@ -152,6 +154,14 @@ const Sidebar = ({
             icon={<Route />}
             label={t('view.mission-editor')}
             component='mission-editor'
+          />
+        )}
+        {hasCamera && (
+          <Module
+            id='cameraView'
+            icon={<Videocam />}
+            label={t('view.camera-view')}
+            component='camera-view'
           />
         )}
         {(hasShowControl || hasMissionEditor) && <hr />}
