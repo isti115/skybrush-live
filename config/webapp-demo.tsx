@@ -46,6 +46,9 @@ const overrides: ConfigOverrides = {
     connectAutomatically: true,
     hostName: '', // empty string to allow the substitution of the hostname and port from the URL
     preventManualSetup: true,
+    hostName: 'server.skybrush.donko.hu',
+    port: 443,
+    isSecure: true,
   },
 
   // Session setup
