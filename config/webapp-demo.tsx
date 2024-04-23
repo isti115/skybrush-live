@@ -30,6 +30,9 @@ const overrides: ConfigOverrides = {
   server: {
     connectAutomatically: true,
     preventManualSetup: true,
+    hostName: 'server.skybrush.donko.hu',
+    port: 443,
+    isSecure: true,
   },
 
   // Session setup
