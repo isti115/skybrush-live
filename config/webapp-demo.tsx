@@ -24,6 +24,25 @@ const overrides: ConfigOverrides = {
     loadShowFromCloud: true,
   },
 
+  // Enable all available languages in the experimental ci translation build
+  language: {
+    enabled: new Set([
+      'de',
+      'en',
+      'es',
+      'fr',
+      'hu',
+      'it',
+      'ja',
+      'ko',
+      'nl',
+      'pl',
+      'ro',
+      'ru',
+      'zh-Hans',
+    ]),
+  },
+
   // Set the origin and the view to Farkashegy Airfield to match the guided tour
   map: {
     origin: {
