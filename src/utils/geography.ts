@@ -74,6 +74,15 @@ import { isRunningOnMac } from './platform';
 // with the `unique symbol` trick?
 // https://github.com/Microsoft/TypeScript/issues/364#issuecomment-719046161
 
+const _Longitude: unique symbol = Symbol('Longitude');
+export type Longitude = number & { [_Longitude]: void };
+
+const _Latitude: unique symbol = Symbol('Latitude');
+export type Latitude = number & { [_Latitude]: void };
+
+export type LonLat = [Longitude, Latitude];
+export type LatLon = [Latitude, Longitude];
+
 // The angle sign spams lots of CoreText-related warnings in the console when
 // running under Electron on macOS, so we use the @ sign there as a replacement.
 // Windows and Linux seem to be okay with the angle sign;
@@ -777,13 +786,13 @@ export class FlatEarthCoordinateSystem {
    * @param coords - A flat Earth coordinate pair to convert
    * @returns The converted coordinates
    */
-  toLonLat(coords: [number, number]): [number, number] {
+  toLonLat(coords: [number, number]): LonLat {
     const result: Coordinate2D = [coords[0], coords[1] * this._yMul];
     Coordinate.rotate(result, this._orientation);
     return [
-      result[1] / this._r2OverCosOriginLatInRadians / this._piOver180 +
-        this._origin[0],
-      result[0] / this._r1 / this._piOver180 + this._origin[1],
+      (result[1] / this._r2OverCosOriginLatInRadians / this._piOver180 +
+        this._origin[0]) as Longitude,
+      (result[0] / this._r1 / this._piOver180 + this._origin[1]) as Latitude,
     ];
   }
 
@@ -907,7 +916,7 @@ export const bufferPolygon = (
   const transform = new FlatEarthCoordinateSystem({
     origin: [0, 0],
   });
-  const geoCoordinates = shiftedCoordinates.map((coordinate) =>
+  const geoCoordinates: LonLat[] = shiftedCoordinates.map((coordinate) =>
     transform.toLonLat(coordinate)
   );
 
