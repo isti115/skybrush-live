@@ -59,7 +59,9 @@ import {
 } from './math';
 import { isRunningOnMac } from './platform';
 
-// TODO: Define better types for coordinates? (Partially solved on 2023-08-12.)
+// TODO: Define better types for coordinates?
+// (Partially solved on 2023-08-12.)
+// (Further improved on 2025-02-18.)
 //
 // The one provided by OpenLayers is too generic (`Array<number>` instead
 // of [number, number]), while their docs do specify _"an `xy` coordinate"_.
@@ -99,7 +101,7 @@ const ANGLE_SIGN = isRunningOnMac ? '@' : '∠';
  * @param second - The second point
  * @returns Bearing, in degrees, in the [0; 360) range
  */
-export function bearing(first: Coordinate2D, second: Coordinate2D): number {
+export function bearing(first: LonLat, second: LonLat): number {
   const lonDiff = toRadians(second[0] - first[0]);
   const firstLatRadians = toRadians(first[1]);
   const secondLatRadians = toRadians(second[1]);
@@ -122,10 +124,7 @@ export function bearing(first: Coordinate2D, second: Coordinate2D): number {
  * @param second - The second point
  * @returns Bearing, in degrees, in the [0; 360) range
  */
-export function finalBearing(
-  first: Coordinate2D,
-  second: Coordinate2D
-): number {
+export function finalBearing(first: LonLat, second: LonLat): number {
   const angle = bearing(second, first);
   return (angle + 180) % 360;
 }
@@ -622,19 +621,6 @@ export const WGS84 = makeEllipsoidModel(6378137, 298.257223563);
  * to [180.0 85.06] as seen here. @see https://epsg.io/3857
  */
 
-type CoordinateTransformationFunction = {
-  // Special case for two dimensions
-  (
-    coordinates: Coordinate2D,
-    projection?: Projection.ProjectionLike
-  ): Coordinate2D;
-  // Original type
-  (
-    coordinates: Coordinate.Coordinate,
-    projection?: Projection.ProjectionLike
-  ): Coordinate.Coordinate;
-};
-
 /**
  * Helper function to convert a longitude-latitude pair to the coordinate
  * system used by the map view.
@@ -646,8 +632,15 @@ type CoordinateTransformationFunction = {
  * @returns The OpenLayers coordinates corresponding
  *          to the given longitude-latitude pair
  */
-export const mapViewCoordinateFromLonLat =
-  Projection.fromLonLat as CoordinateTransformationFunction;
+export const mapViewCoordinateFromLonLat = Projection.fromLonLat as {
+  // Special case
+  (coordinates: LonLat, projection?: Projection.ProjectionLike): Coordinate2D;
+  // // Original type
+  // (
+  //   coordinates: Coordinate.Coordinate,
+  //   projection?: Projection.ProjectionLike
+  // ): Coordinate.Coordinate;
+};
 
 /**
  * Helper function to convert a coordinate from the map view into a
@@ -660,17 +653,23 @@ export const mapViewCoordinateFromLonLat =
  * @returns The longtitude-latitude pair corresponding
  *          to the given OpenLayers coordinates
  */
-export const lonLatFromMapViewCoordinate =
-  Projection.toLonLat as CoordinateTransformationFunction;
-
+export const lonLatFromMapViewCoordinate = Projection.toLonLat as {
+  // Special case
+  (coordinates: Coordinate2D, projection?: Projection.ProjectionLike): LonLat;
+  // // Original type
+  // (
+  //   coordinates: Coordinate.Coordinate,
+  //   projection?: Projection.ProjectionLike
+  // ): Coordinate.Coordinate;
+};
 /**
  * Helper function to move a longitude-latitude coordinate pair by a vector
  * expressed in map view coordinates.
  */
 export const translateLonLatWithMapViewDelta = (
-  origin: Coordinate2D,
+  origin: LonLat,
   delta: Coordinate2D
-): Coordinate2D => {
+): LonLat => {
   const originInMapView = mapViewCoordinateFromLonLat(origin);
 
   return lonLatFromMapViewCoordinate([

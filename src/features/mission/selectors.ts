@@ -2,6 +2,7 @@ import { produce } from 'immer';
 import isNil from 'lodash-es/isNil';
 import max from 'lodash-es/max';
 import range from 'lodash-es/range';
+import unary from 'lodash-es/unary';
 import { createSelector } from '@reduxjs/toolkit';
 import turfContains from '@turf/boolean-contains';
 import * as TurfHelpers from '@turf/helpers';
@@ -41,6 +42,7 @@ import {
   selectOrdered,
 } from '~/utils/collections';
 import {
+  LonLat,
   mapViewCoordinateFromLonLat,
   turfDistanceInMeters,
 } from '~/utils/geography';
@@ -566,23 +568,22 @@ export const getMissionItemsWithAltitudesInOrder: AppSelector<
  * Returns the coordinates of the convex hull of the currently loaded mission
  * in world coordinates.
  */
-export const getConvexHullOfMissionInWorldCoordinates: AppSelector<
-  Coordinate2D[]
-> = createSelector(
-  getGPSBasedHomePositionsInMission,
-  getMissionItemsWithCoordinatesInOrder,
-  getMissionItemsWithAreasInOrder,
-  (homePositions, missionItemsWithCoorinates, missionItemsWithAreas) =>
-    convexHull2D([
-      ...rejectNullish(homePositions).map(
-        ({ lon, lat }): Coordinate2D => [lon, lat]
-      ),
-      ...missionItemsWithCoorinates.map(
-        ({ coordinate: { lon, lat } }): Coordinate2D => [lon, lat]
-      ),
-      ...missionItemsWithAreas.flatMap(({ area: { points } }) => points),
-    ])
-);
+export const getConvexHullOfMissionInWorldCoordinates: AppSelector<LonLat[]> =
+  createSelector(
+    getGPSBasedHomePositionsInMission,
+    getMissionItemsWithCoordinatesInOrder,
+    getMissionItemsWithAreasInOrder,
+    (homePositions, missionItemsWithCoorinates, missionItemsWithAreas) =>
+      convexHull2D([
+        ...rejectNullish(homePositions).map(
+          ({ lon, lat }): Coordinate2D => [lon, lat]
+        ),
+        ...missionItemsWithCoorinates.map(
+          ({ coordinate: { lon, lat } }): Coordinate2D => [lon, lat]
+        ),
+        ...missionItemsWithAreas.flatMap(({ area: { points } }) => points),
+      ])
+  );
 
 /**
  * Returns the coordinates of the convex hull of the currently loaded mission
@@ -594,7 +595,7 @@ export const getConvexHullOfMissionInMapViewCoordinates: AppSelector<
   getConvexHullOfMissionInWorldCoordinates,
   (convexHullOfHomePositionsAndMissionItemsInWorldCoordinates) =>
     convexHullOfHomePositionsAndMissionItemsInWorldCoordinates.map(
-      (worldCoordinate) => mapViewCoordinateFromLonLat(worldCoordinate)
+      unary(mapViewCoordinateFromLonLat)
     )
 );
 
