@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 /**
  * @file Geography-related utility functions and variables.
  */
@@ -10,8 +9,7 @@ import minBy from 'lodash-es/minBy';
 import unary from 'lodash-es/unary';
 import * as Coordinate from 'ol/coordinate';
 import * as Extent from 'ol/extent';
-import type OLFeature from 'ol/Feature';
-import type { FeatureLike } from 'ol/Feature';
+import { type default as OLFeature, type FeatureLike } from 'ol/Feature';
 import {
   type Geometry,
   LineString,
@@ -27,6 +25,7 @@ import * as Projection from 'ol/proj';
 import type RenderFeature from 'ol/render/Feature';
 import VectorSource from 'ol/source/Vector';
 import { getArea, getLength } from 'ol/sphere';
+// FIXME: import/no-extraneous-dependencies : 'three' should be listed in the project's dependencies. Run 'npm i -S three' to add it
 import { type Vector3 } from 'three';
 import turfBuffer from '@turf/buffer';
 import turfDifference from '@turf/difference';
@@ -943,6 +942,7 @@ export const bufferPolygon = (
       return [flatEarthCoord[0] + centroid[0], flatEarthCoord[1] + centroid[1]];
     });
 
+  // TODO: Ask ntamas (b48596c859bbc3dd7cba84204da1781edfc394a4)
   return convexHull2D(outerLinearRing);
 };
 

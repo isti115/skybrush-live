@@ -1,4 +1,4 @@
-import { isNil } from 'lodash-es';
+import isNil from 'lodash-es/isNil';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';

@@ -46,6 +46,7 @@ export const getMaximumHorizontalDistanceFromTakeoffPositionInTrajectory = (
   trajectory: Trajectory
 ): number | undefined => {
   if (!isValidTrajectory(trajectory)) {
+    // TODO: Don't just silently ignore this!
     return;
   }
 
@@ -75,6 +76,7 @@ export const getMaximumHeightOfTrajectory = (
   trajectory: Trajectory
 ): number | undefined => {
   if (!isValidTrajectory(trajectory)) {
+    // TODO: Don't just silently ignore this!
     return;
   }
 
@@ -92,6 +94,7 @@ export const getPointsOfTrajectory = (
   { includeControlPoints = false } = {}
 ): Coordinate3D[] => {
   if (!isValidTrajectory(trajectory)) {
+    // TODO: Don't just silently ignore this!
     return [];
   }
 

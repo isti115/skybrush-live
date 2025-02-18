@@ -8,21 +8,21 @@ import { freeze } from '@reduxjs/toolkit';
 
 import { loadCompiledShow as processFile } from '@skybrush/show-format';
 
-import { removeFeaturesByIds } from '~/features/map-features/slice';
 import { getFeaturesInOrder } from '~/features/map-features/selectors';
+import { removeFeaturesByIds } from '~/features/map-features/slice';
 import {
+  setCommandsAreBroadcast,
+  setMappingLength,
+  setMissionType,
   updateHomePositions,
   updateLandingPositions,
   updateTakeoffHeadings,
-  setMappingLength,
-  setMissionType,
-  setCommandsAreBroadcast,
 } from '~/features/mission/slice';
 import { showNotification } from '~/features/snackbar/actions';
 import { MessageSemantics } from '~/features/snackbar/types';
 import {
-  getCurrentGPSPositionByUavId,
   getActiveUAVIds,
+  getCurrentGPSPositionByUavId,
 } from '~/features/uavs/selectors';
 import { clearLastUploadResultForJobType } from '~/features/upload/slice';
 import { MissionType } from '~/model/missions';
@@ -38,34 +38,34 @@ import { JOB_TYPE } from './constants';
 import { StartMethod } from './enums';
 import {
   getAbsolutePathOfShowFile,
+  getCommonTakeoffHeading,
   getFirstPointsOfTrajectoriesInWorldCoordinates,
   getLastPointsOfTrajectoriesInWorldCoordinates,
-  getOutdoorShowOrigin,
-  getRoomCorners,
   getOutdoorShowAltitudeReference,
   getOutdoorShowOrientation,
-  getCommonTakeoffHeading,
+  getOutdoorShowOrigin,
+  getRoomCorners,
   getShowClockReference,
   hasScheduledStartTime,
 } from './selectors';
 import {
   approveTakeoffAreaAt,
+  _clearLoadedShow,
   loadingProgress,
   revokeTakeoffAreaApproval,
   setEnvironmentType,
   setLastLoadingAttemptFailed,
-  setOutdoorShowOrigin,
+  _setOutdoorShowAltitudeReference,
   setOutdoorShowOrientation,
+  setOutdoorShowOrigin,
   setOutdoorShowTakeoffHeadingSpecification,
   setRoomCorners,
+  setShowAuthorization,
   setStartMethod,
+  setStartTime,
   signOffOnManualPreflightChecksAt,
   signOffOnOnboardPreflightChecksAt,
-  _setOutdoorShowAltitudeReference,
-  _clearLoadedShow,
-  setStartTime,
   synchronizeShowSettings,
-  setShowAuthorization,
 } from './slice';
 
 /**
